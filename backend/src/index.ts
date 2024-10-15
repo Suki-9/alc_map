@@ -3,7 +3,7 @@ import Database from 'better-sqlite3';
 import { cors } from './MiddleWares';
 import * as fs from 'fs';
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 const geoData = new class GeoData extends Database {
   constructor() {
     super('./resources/geo_data.db');
