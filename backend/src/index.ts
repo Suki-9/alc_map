@@ -31,6 +31,13 @@ const geoData = new class GeoData extends Database {
       .map(row => row.municipalities);
   }
 
+  public towns(prefecture: string, municipality: string) {
+    return this
+      .prepare<{ prefecture: string, municipality: string }[], { town: string }>(`SELECT DISTINCT town FROM 'geo_data' WHERE prefecture = @prefecture AND municipalities = @municipality;`)
+      .all({ prefecture, municipality })
+      .map(row => row.town);
+  }
+}
 express()
   .use(cors)
   .get('/api/geo', (req, res) => {
@@ -58,5 +65,15 @@ express()
     }
 
     res.send(geoData.municipalities(prefecture))
+  })
+  .get('/api/geo/towns', (req, res) => {
+    const { prefecture, municipality } = req.query;
+
+    if (typeof prefecture !== 'string' || typeof municipality !== 'string') {
+      res.status(400).send({ error: 'Query Error' });
+      return;
+    }
+
+    res.send(geoData.towns(prefecture, municipality))
   })
   .listen(PORT, () => console.log(`Server running at PORT: ${PORT}`))
