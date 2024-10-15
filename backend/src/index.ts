@@ -17,7 +17,13 @@ const geoData = new class GeoData extends Database {
     return this.prepare(GeoData.SQL.geoSearch).get({ lat, lng })
   }
 
-}
+  public prefectures(): string[] {
+    return this
+      .prepare<undefined[], { prefecture: string }>(`SELECT DISTINCT prefecture FROM 'geo_data';`)
+      .all()
+      .map(row => row.prefecture);
+  }
+
 express()
   .use(cors)
   .get('/api/geo', (req, res) => {
@@ -32,5 +38,8 @@ express()
 
     if (result) res.send(result);
     else res.send(500).send({ error: 'not found' });
+  })
+  .get('/api/geo/prefectures', (req, res) => {
+    res.send(geoData.prefectures());
   })
   .listen(PORT, () => console.log(`Server running at PORT: ${PORT}`))
