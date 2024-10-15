@@ -5,6 +5,9 @@ const router = createRouter({
   routes: [{
     path: '/',
     component: () => import('@/pages/Map.vue')
+  }, {
+    path: '/registry',
+    component: () => import('@/pages/Registry.vue')
   }]
 });
 
