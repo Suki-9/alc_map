@@ -4,5 +4,5 @@ import App from './App.vue'
 import { installPlugins } from './plugins';
 
 const app = createApp(App);
-app.mount('#app');
 installPlugins(app);
+app.mount('#app');
