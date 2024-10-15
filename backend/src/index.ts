@@ -90,4 +90,6 @@ express()
   .get('/api/pin', (req, res) => {
     res.send(storeData.allPin())
   })
+  .use(express.static(__dirname + '/Public'))
+  .all("*", (_, res) => res.type('html').sendFile(__dirname + '/Public/index.html'))
   .listen(PORT, () => console.log(`Server running at PORT: ${PORT}`))
