@@ -24,6 +24,7 @@ async function init_frontend(host) {
 }
 
 (async () => {
-  const host = new URL(process.argv[2]);
-  await Promise.all([init_backend(host.port), init_frontend(host.protocol + '//' + host.hostname)]);
+  const host = process.argv[2];
+  const port = process.argv[3];
+  await Promise.all([init_backend(port), init_frontend(host)]);
 })()
