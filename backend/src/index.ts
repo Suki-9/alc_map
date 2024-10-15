@@ -38,6 +38,17 @@ const geoData = new class GeoData extends Database {
       .map(row => row.town);
   }
 }
+
+const storeData = new class StoreData extends Database {
+  constructor() {
+    super('./resources/store_data.db');
+  };
+
+  public allPin() {
+    return this.prepare("SELECT * FROM 'store_data';").all();
+  }
+}
+
 express()
   .use(cors)
   .get('/api/geo', (req, res) => {
@@ -75,5 +86,8 @@ express()
     }
 
     res.send(geoData.towns(prefecture, municipality))
+  })
+  .get('/api/pin', (req, res) => {
+    res.send(storeData.allPin())
   })
   .listen(PORT, () => console.log(`Server running at PORT: ${PORT}`))
