@@ -24,16 +24,16 @@ const towns = ref<string[]>();
 
 const showMap = ref<boolean>(true);
 
-const getPrefectures = () => fetch(`http://192.168.11.5:5000/api/geo/prefectures`)
+const getPrefectures = () => fetch(`${import.meta.env.VITE_HOST}/api/geo/prefectures`)
   .then(async r => prefectures.value = await r.json())
 
-const getMunicipalities = () => fetch(`http://192.168.11.5:5000/api/geo/municipalities?prefecture=${prefecture.value}`)
+const getMunicipalities = () => fetch(`${import.meta.env.VITE_HOST}/api/geo/municipalities?prefecture=${prefecture.value}`)
   .then(async r => municipalities.value = await r.json())
 
-const getTown = () => fetch(`http://192.168.11.5:5000/api/geo/towns?prefecture=${prefecture.value}&municipality=${municipality.value}`)
+const getTown = () => fetch(`${import.meta.env.VITE_HOST}/api/geo/towns?prefecture=${prefecture.value}&municipality=${municipality.value}`)
   .then(async r => towns.value = await r.json())
 
-const getAddress = () => fetch(`http://192.168.11.5:5000/api/geo?lat=${center.value.lat}&lng=${center.value.lng}`)
+const getAddress = () => fetch(`${import.meta.env.VITE_HOST}/api/geo?lat=${center.value.lat}&lng=${center.value.lng}`)
   .then(async r => {
     const address = await r.json();
 
@@ -42,7 +42,7 @@ const getAddress = () => fetch(`http://192.168.11.5:5000/api/geo?lat=${center.va
     town.value = address.town;
   });
 
-const postData = () => fetch(`http://192.168.11.5:5000/api/store`, {
+const postData = () => fetch(`${import.meta.env.VITE_HOST}/api/store`, {
   method: 'POST',
   body: JSON.stringify({
     name: name.value,

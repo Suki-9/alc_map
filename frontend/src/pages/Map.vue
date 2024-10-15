@@ -11,10 +11,10 @@ const center = ref<[number, number]>([35.6769883, 139.7588499]);
 const markers = ref<MarkerData[]>([]);
 const modalData = ref<MarkerData & { address: string } | null>(null);
 
-const getAddress = (lat: number, lng: number) => fetch(`http://192.168.11.5:5000/api/geo?lat=${lat}&lng=${lng}`)
+const getAddress = (lat: number, lng: number) => fetch(`${import.meta.env.VITE_HOST}/api/geo?lat=${lat}&lng=${lng}`)
   .then(async r => await <Promise<{ prefecture: string; municipalities: string; town: string; }>>r.json());
 
-const getPin = () => fetch('http://192.168.11.5:5000/api/pin').then(
+const getPin = () => fetch(`${import.meta.env.VITE_HOST}/api/pin`).then(
   async r => markers.value = (await <Promise<MarkerData[]>>r.json()).map((v, i) => { v.index = i; return v })
 );
 
