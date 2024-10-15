@@ -2,6 +2,7 @@
 </script>
 
 <template>
+  <RouterView></RouterView>
 </template>
 
 <style module></style>
